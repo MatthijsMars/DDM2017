@@ -30,7 +30,7 @@ def cv1(x, bws, model='gaussian', plot=False, n_folds=10):
     for i, bw in enumerate(bws):
     
         # I will do N-fold CV here. This divides X into N_folds
-        kf = KFold(N)
+        kf = KFold(n_folds)
 
         # Initiate - lnP will contain the log likelihood of the test sets
         # and i_k is a counter for the folds that is used for plotting and
@@ -93,13 +93,12 @@ def pickle_from_file(fname):
 x = pickle_from_file('mysterious-peaks.pkl')[:,np.newaxis]
 xgrid = np.arange(-20,20, 0.1)[:,np.newaxis]
 
-'''
-bws = np.arange(0.5,1,0.1)
-cv = cv1(x,bws, model='gaussian', plot=False, n_folds=3)
+
+bws = np.arange(0.1,3.0,0.1)
+cv = cv1(x,bws, model='gaussian', plot=False, n_folds=10)
 bw = bws[np.argmax(np.exp(cv1(x, bws)))]
 print 'bw =', bw
-'''
-bw = 0.5
+
 kde = KD(bandwidth = bw).fit(x)
 plt.plot(xgrid[:,0], np.exp(kde.score_samples(xgrid)))
 

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #import seaborn as sns
 #import pandas as pd
 import sys
-import cPickle
+import pickle as cPickle
 #from sklearn.linear_model import Ridge, Lasso
 from astroML.linear_model import  LinearRegression
 import pdb
@@ -15,20 +15,20 @@ import corner
 def pickle_to_file(data, fname):
     """Save a variable simply to a file"""
     try:
-        fh = open(fname, 'w')
+        fh = open(fname, 'wb')
         cPickle.dump(data, fh)
         fh.close()
     except:
-        print "Pickling failed!", sys.exc_info()[0]
+        print( "Pickling failed!", sys.exc_info()[0])
 
 def pickle_from_file(fname):
     """Restore a variable saved with pickle_to_file"""
     try:
-        fh = open(fname, 'r')
+        fh = open(fname, 'rb')
         data = cPickle.load(fh)
         fh.close()
     except:
-        print "Loading pickled data failed!", sys.exc_info()[0]
+        print ("Loading pickled data failed!", sys.exc_info()[0])
         data = None
 
     return data
@@ -44,7 +44,7 @@ M = x[:, None]
 model = LinearRegression(fit_intercept=True)
 res = model.fit(M, yobs, sigma)
 model.predict(M)
-print res.coef_
+print (res.coef_)
 
 
 def lnprob(theta, x,yobs,sigma):
