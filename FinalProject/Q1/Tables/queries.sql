@@ -7,6 +7,14 @@
 --R3
 --select Ks.StarID, Ks.Flux1, Ks.dFlux1, Ks.Flux1 - (select AVG(Ks.Flux1) from Ks) as dev from Ks where dev > 20*Ks.dFlux1
 
+select Ks.StarID, Ks.Flux1, Ks.dFlux1, 
+(select avg(d.Flux1) from data as d  join Observations o on d.ObservationID == o.ID where d.StarID == Ks.StarID) as c
+from Ks 
+
+
+ --(SELECT IFNULL(ROUND(AVG(d.Flux1), 4) ,0) FROM  
+   --  WHERE d2.id = d1.id AND pass = 1) as val_1,
+
 --R4
 --select * from Observations where FieldID == 1
 
